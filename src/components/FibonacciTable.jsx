@@ -1,109 +1,30 @@
-import React, { useState } from "react";
-import fibonacci from "../utils/fibonacci";
+import React from "react";
 
-const FibonacciTable = () => {
-  const [rows, setRows] = useState(0);
-  const [columns, setColumns] = useState(0);
-  const [data, setData] = useState([]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const totalCells = rows * columns;
-    const fibSequence = fibonacci(totalCells);
-    const tableData = [];
-
-    for (let i = 0; i < rows; i++) {
-      const row = [];
-      for (let j = 0; j < columns; j++) {
-        row.push(fibSequence[i * columns + j] || "");
-      }
-      tableData.push(row);
-    }
-
-    setData(tableData);
-  };
-
+const FibonacciTable = ({ data }) => {
   return (
-    <div
+    <table
+      border="1"
       style={{
-        width: "80%",
-        marginTop: "50px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        width: "500px",
+        marginTop: "20px",
+        borderCollapse: "collapse",
       }}
     >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          width: "500px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-            alignItems: "start",
-          }}
-        >
-          <div style={{ width: "100%", display: "flex" }}>
-            <label style={{ width: "100px", textAlign: "start" }}>Rows:</label>
-            <input
-              type="number"
-              value={rows}
-              onChange={(e) => setRows(parseInt(e.target.value))}
-              min="1"
-              style={{ width: "100%" }}
-            />
-          </div>
-          <div style={{ width: "100%", display: "flex" }}>
-            <label style={{ width: "100px", textAlign: "start" }}>
-              Columns:
-            </label>
-            <input
-              type="number"
-              value={columns}
-              onChange={(e) => setColumns(parseInt(e.target.value))}
-              min="1"
-              style={{ width: "100%" }}
-            />
-          </div>
-        </div>
-        <button
-          type="submit"
-          style={{ marginTop: "10px", alignSelf: "end", padding: "4px" }}
-        >
-          SUBMIT
-        </button>
-      </form>
-
-      <table
-        border="1"
-        style={{
-          width: "500px",
-          marginTop: "20px",
-          borderCollapse: "collapse",
-        }}
-      >
-        <tbody>
-          {data.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, colIndex) => (
-                <td
-                  key={colIndex}
-                  style={{ padding: "10px", textAlign: "center" }}
-                >
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+      <tbody>
+        {data.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((cell, colIndex) => (
+              <td
+                key={colIndex}
+                style={{ padding: "10px", textAlign: "center" }}
+              >
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
